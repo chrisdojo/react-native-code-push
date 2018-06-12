@@ -1,6 +1,7 @@
 package com.microsoft.codepush.react;
 
 import android.content.Context;
+import com.microsoft.codepush.react.ILogCallback;
 
 public class CodePushBuilder {
     private String mDeploymentKey;
@@ -9,6 +10,7 @@ public class CodePushBuilder {
     private boolean mIsDebugMode;
     private String mServerUrl;
     private Integer mPublicKeyResourceDescriptor;
+    private ILogCallback mLogCallback;
 
     public CodePushBuilder(String deploymentKey, Context context) {
         this.mDeploymentKey = deploymentKey;
@@ -31,7 +33,12 @@ public class CodePushBuilder {
         return this;
     }
 
+    public CodePushBuilder setLogCallback(ILogCallback logCallback) {
+        this.mLogCallback = logCallback;
+        return this;
+    }
+
     public CodePush build() {
-        return new CodePush(this.mDeploymentKey, this.mContext, this.mIsDebugMode, this.mServerUrl, this.mPublicKeyResourceDescriptor);
+        return new CodePush(this.mDeploymentKey, this.mContext, this.mIsDebugMode, this.mServerUrl, this.mPublicKeyResourceDescriptor, mLogCallback);
     }
 }

@@ -200,10 +200,16 @@ public class CodePushUtils {
     }
 
     public static void log(String message) {
+        if(CodePush.getCurrentInstance() != null && CodePush.getCurrentInstance().getLogCallback() != null) {
+            CodePush.getCurrentInstance().getLogCallback().onD(CodePushConstants.REACT_NATIVE_LOG_TAG, "[CodePush] " + message)
+        }
         Log.d(CodePushConstants.REACT_NATIVE_LOG_TAG, "[CodePush] " + message);
     }
 
     public static void log(Throwable tr) {
+        if(CodePush.getCurrentInstance() != null && CodePush.getCurrentInstance().getLogCallback() != null) {
+            CodePush.getCurrentInstance().getLogCallback().onE(CodePushConstants.REACT_NATIVE_LOG_TAG, "[CodePush] Exception", tr.getLocalizedMessage());
+        }
         Log.e(CodePushConstants.REACT_NATIVE_LOG_TAG, "[CodePush] Exception", tr);
     }
 

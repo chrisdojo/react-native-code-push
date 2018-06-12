@@ -48,6 +48,7 @@ public class CodePush implements ReactPackage {
 
     private static ReactInstanceHolder mReactInstanceHolder;
     private static CodePush mCurrentInstance;
+    private static ILogCallback mLogCallback;
 
     public CodePush(String deploymentKey, Context context) {
         this(deploymentKey, context, false);
@@ -81,6 +82,12 @@ public class CodePush implements ReactPackage {
         initializeUpdateAfterRestart();
     }
 
+
+    public static CodePush getCurrentInstance() {
+        return mCurrentInstance;
+    }
+
+
     public CodePush(String deploymentKey, Context context, boolean isDebugMode, @NonNull String serverUrl) {
         this(deploymentKey, context, isDebugMode);
         mServerUrl = serverUrl;
@@ -101,6 +108,18 @@ public class CodePush implements ReactPackage {
 
         mServerUrl = serverUrl;
     }
+
+    public CodePush(String deploymentKey, Context context, boolean isDebugMode, @NonNull String serverUrl, Integer publicKeyResourceDescriptor, ILogCallback callback) {
+        this(deploymentKey, context, isDebugMode, serverUrl, publicKeyResourceDescriptor);
+
+        mLogCallback = callback;
+    }
+
+
+    public static ILogCallback getLogCallback() {
+        return mLogCallback;
+    }
+
 
     private String getPublicKeyByResourceDescriptor(int publicKeyResourceDescriptor){
         String publicKey;
